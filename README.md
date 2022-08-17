@@ -1,2 +1,2 @@
 # suresh-g
-learn to java
+full stack developer
