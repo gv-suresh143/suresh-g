@@ -1,0 +1,251 @@
+Microsoft Windows [Version 10.0.19044.1826]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Windwos 10>cd c:\xampp\mysql\bin
+
+c:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 488
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| classicmodels      |
+| emp                |
+| employee           |
+| hotel_management   |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| player             |
+| stud               |
+| test               |
++--------------------+
+11 rows in set (0.001 sec)
+
+MariaDB [(none)]> use hotel_management;
+Database changed
+MariaDB [hotel_management]> show tables;
++----------------------------+
+| Tables_in_hotel_management |
++----------------------------+
+| customer_info              |
+| reservation                |
+| room_class                 |
+| room_info                  |
+| transaction                |
++----------------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [hotel_management]> describe customer_info;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| cust_id   | int(5)      | NO   | PRI | NULL    |       |
+| custfname | varchar(10) | NO   |     | NULL    |       |
+| custlname | varchar(10) | NO   |     | NULL    |       |
+| address   | varchar(30) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.025 sec)
+
+MariaDB [hotel_management]> describe reservation;
++----------------+--------+------+-----+---------+-------+
+| Field          | Type   | Null | Key | Default | Extra |
++----------------+--------+------+-----+---------+-------+
+| reservation_id | int(5) | NO   | PRI | NULL    |       |
+| cust_id        | int(5) | NO   | MUL | NULL    |       |
+| room_id        | int(5) | NO   |     | NULL    |       |
++----------------+--------+------+-----+---------+-------+
+3 rows in set (0.024 sec)
+
+MariaDB [hotel_management]> describe room_class;
++----------+--------+------+-----+---------+-------+
+| Field    | Type   | Null | Key | Default | Extra |
++----------+--------+------+-----+---------+-------+
+| class_id | int(5) | NO   | PRI | NULL    |       |
+| class    | text   | NO   |     | NULL    |       |
++----------+--------+------+-----+---------+-------+
+2 rows in set (0.026 sec)
+
+MariaDB [hotel_management]> describe room_info;
++----------+---------+------+-----+---------+-------+
+| Field    | Type    | Null | Key | Default | Extra |
++----------+---------+------+-----+---------+-------+
+| room_id  | int(11) | NO   | PRI | NULL    |       |
+| class_id | int(11) | NO   | MUL | NULL    |       |
+| price    | int(11) | NO   |     | NULL    |       |
+| date_in  | date    | NO   |     | NULL    |       |
+| date_out | date    | NO   |     | NULL    |       |
++----------+---------+------+-----+---------+-------+
+5 rows in set (0.024 sec)
+
+MariaDB [hotel_management]> describe transaction;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| trans_id   | int(10)     | NO   | PRI | NULL    |       |
+| trans_name | varchar(20) | YES  |     | NULL    |       |
+| cust_id    | int(5)      | YES  | MUL | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+3 rows in set (0.028 sec)
+
+MariaDB [hotel_management]> select* from customer_info;
++---------+-----------+-----------+-----------------+
+| cust_id | custfname | custlname | address         |
++---------+-----------+-----------+-----------------+
+|       1 | virat     | kholi     | 2/348,delhi     |
+|       2 | ms        | dhoni     | 3/348,ranji     |
+|       3 | kl        | rahul     | 4/348,bengaluru |
+|       4 | ramya     | anand     | 5/348,hosur     |
+|       5 | sandy     | anand     | 5/348,salem     |
++---------+-----------+-----------+-----------------+
+5 rows in set (0.001 sec)
+
+MariaDB [hotel_management]> select* from reservation;
++----------------+---------+---------+
+| reservation_id | cust_id | room_id |
++----------------+---------+---------+
+|              5 |       1 |     101 |
+|              4 |       2 |     102 |
+|              3 |       3 |     103 |
+|              2 |       4 |     105 |
+|              1 |       5 |     105 |
++----------------+---------+---------+
+5 rows in set (0.001 sec)
+
+MariaDB [hotel_management]> select* from room_class;
++----------+-------+
+| class_id | class |
++----------+-------+
+|     1001 | A     |
+|     1002 | B     |
+|     1003 | C     |
+|     1004 | D     |
+|     1005 | E     |
++----------+-------+
+5 rows in set (0.002 sec)
+
+MariaDB [hotel_management]> select* from room_info;
++---------+----------+-------+------------+------------+
+| room_id | class_id | price | date_in    | date_out   |
++---------+----------+-------+------------+------------+
+|     101 |     1001 |  1200 | 2022-08-26 | 2022-08-27 |
+|     102 |     1002 |  1400 | 2022-08-11 | 2022-08-12 |
+|     103 |     1003 |  1600 | 2022-08-03 | 2022-08-04 |
+|     104 |     1004 |  1800 | 2022-08-01 | 2022-08-02 |
+|     105 |     1005 |  2000 | 2022-08-23 | 2022-08-25 |
++---------+----------+-------+------------+------------+
+5 rows in set (0.001 sec)
+
+MariaDB [hotel_management]> select* from transaction;
++----------+------------+---------+
+| trans_id | trans_name | cust_id |
++----------+------------+---------+
+|    10001 | bullet     |       1 |
+|    20001 | mine       |       2 |
+|    30001 | papa       |       3 |
+|    40001 | love       |       4 |
+|    50001 | babe       |       5 |
++----------+------------+---------+
+5 rows in set (0.001 sec)
+QUERY.1
+MariaDB [hotel_management]> update room_info set price=price+200 ;
+Query OK, 5 rows affected (0.102 sec)
+Rows matched: 5  Changed: 5  Warnings: 0	
+MariaDB [hotel_management]> select* from room_info;
++---------+----------+-------+------------+------------+
+| room_id | class_id | price | date_in    | date_out   |
++---------+----------+-------+------------+------------+
+|     101 |     1001 |  1400 | 2022-08-26 | 2022-08-27 |
+|     102 |     1002 |  1600 | 2022-08-11 | 2022-08-12 |
+|     103 |     1003 |  1800 | 2022-08-03 | 2022-08-04 |
+|     104 |     1004 |  2000 | 2022-08-01 | 2022-08-02 |
+|     105 |     1005 |  2200 | 2022-08-23 | 2022-08-25 |
++---------+----------+-------+------------+------------+
+5 rows in set (0.001 sec)
+QUERY.2
+MariaDB [hotel_management]> select custfname,custlname from customer_info
+    -> where cust_id in(select cust_id from customer_info where custfname="virat");
++-----------+-----------+
+| custfname | custlname |
++-----------+-----------+
+| virat     | kholi     |
++-----------+-----------+
+1 row in set (0.078 sec)
+QUERY.3
+MariaDB [hotel_management]> select cust_id,custfname,custlname from customer_info where cust_id=2 and custfname="ms";
++---------+-----------+-----------+
+| cust_id | custfname | custlname |
++---------+-----------+-----------+
+|       2 | ms        | dhoni     |
++---------+-----------+-----------+
+1 row in set (0.001 sec)
+QUERY.4
+MariaDB [hotel_management]> select cust_id,custfname,custlname from customer_info where custlname<>"dhoni";
++---------+-----------+-----------+
+| cust_id | custfname | custlname |
++---------+-----------+-----------+
+|       1 | virat     | kholi     |
+|       3 | kl        | rahul     |
+|       4 | ramya     | anand     |
+|       5 | sandy     | anand     |
++---------+-----------+-----------+
+4 rows in set (0.001 sec)
+QUERY.5
+MariaDB [hotel_management]> select* from customer_info where cust_id=(select cust_id from transaction where trans_name="papa");
++---------+-----------+-----------+-----------------+
+| cust_id | custfname | custlname | address         |
++---------+-----------+-----------+-----------------+
+|       3 | kl        | rahul     | 4/348,bengaluru |
++---------+-----------+-----------+-----------------+
+1 row in set (0.001 sec)
+QUERY.6
+MariaDB [hotel_management]> select cust_id,concat(custfname,'',custlname) as"full name" from customer_info where cust_id=2;
++---------+-----------+
+| cust_id | full name |
++---------+-----------+
+|       2 | msdhoni   |
++---------+-----------+
+1 row in set (0.001 sec)
+QUERY.7
+MariaDB [hotel_management]> create view cust_info as select cust_id,concat(custfname,' ',custlname) as"fullname" from customer_info where cust_id in(2,3);
+Query OK, 0 rows affected (0.082 sec)
+MariaDB [hotel_management]> select* from cust_info;
++---------+----------+
+| cust_id | fullname |
++---------+----------+
+|       2 | ms dhoni |
+|       3 | kl rahul |
++---------+----------+
+2 rows in set (0.070 sec)
+QUERY.8
+MariaDB [hotel_management]> drop view if exists cust_info;
+Query OK, 0 rows affected (0.003 sec)
+
+MariaDB [hotel_management]> select* from cust_info;
+ERROR 1146 (42S02): Table 'hotel_management.cust_info' doesn't exist
+MariaDB [hotel_management]>
+QUERY.9
+MariaDB [hotel_management]> select avg(price) from room_info;
++------------+
+| avg(price) |
++------------+
+|  1800.0000 |
++------------+
+1 row in set (0.064 sec)
+QUERY.10
+MariaDB [hotel_management]> select sum(price) from room_info;
++------------+
+| sum(price) |
++------------+
+|       9000 |
++------------+
+1 row in set (0.071 sec)
+
